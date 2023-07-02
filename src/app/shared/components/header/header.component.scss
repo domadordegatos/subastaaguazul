@@ -1,0 +1,19 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+
+.text-li{
+    color: white;
+}
+
+@keyframes slide-up {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  .button-clicked {
+    border: 2px solid white;
+    border-radius: 10px;
+  }

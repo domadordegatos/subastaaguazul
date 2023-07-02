@@ -1,0 +1,42 @@
+    <section class="bg-gray-50 dark:bg-gray-900" style="height: 100vh;">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a routerLink="/login">
+            <img class="items-center w-20 h-20 mr-2" src="../../../../assets/img/logo.png" alt="logo"></a>
+              <a routerLink="/login" class="flex text-center items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                  Subasta Ganadera Aguazul APP
+              </a>
+          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+              <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                  <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                      Ingresa con tu cuenta
+                  </h1>
+                  <form class="space-y-4 md:space-y-6" [formGroup]="loginForm">
+                      <div>
+                          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tu correo</label>
+                          <input formControlName="email" type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                      </div>
+                      <div>
+                          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                          <input type="password" formControlName="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                      </div>
+                      <div class="flex items-center justify-end">
+                          <a [routerLink]="['/forgot-password']" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Olvidaste tu contraseña?</a>
+                      </div>
+                      <button (click)="onLogin()" type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar Sesión</button>
+
+                      <button (click)="onClickGooogleLogin()" class="flex justify-center w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-google mr-2" viewBox="0 0 16 16">
+                          <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                        </svg>
+                        Inicia con Google</button>
+
+
+
+                      <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                          No tienes una cuenta? <a [routerLink]="['/register']" class="font-medium text-blue-600 hover:underline dark:text-blue-500"> Registrate</a>
+                      </p>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </section>
