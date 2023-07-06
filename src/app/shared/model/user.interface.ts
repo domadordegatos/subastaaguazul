@@ -8,4 +8,5 @@ export interface userI {
     direcction?: string;
     city?: string;
     paleta?:number;
+    date?:number
   }

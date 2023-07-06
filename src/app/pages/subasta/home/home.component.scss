@@ -1,0 +1,8 @@
+#enviadaSpan {
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  
+  #enviadaSpan.show {
+    opacity: 1;
+  }

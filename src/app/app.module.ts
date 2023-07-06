@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BannerComponent } from './shared/components/banner/banner.component';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { UnautorizedComponent } from './pages/subasta/unautorized/unautorized.component';
 
 registerLocaleData(localeEs);
 @NgModule({

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DirectosComponent } from './directos.component';
+import { UnautorizedComponent } from './unautorized.component';
 
-const routes: Routes = [{path:'',component:DirectosComponent}];
+const routes: Routes = [{ path: '', component: UnautorizedComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DirectosRoutingModule { }
+export class UnautorizedRoutingModule { }

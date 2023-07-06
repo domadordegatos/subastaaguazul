@@ -1,10 +1,9 @@
-import {Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SubaSvcService } from '../suba-svc.service';
 import { AuthSvcService } from '../../auth/auth-svc.service';
 import { userI } from 'src/app/shared/model/user.interface';
 import { liveI } from 'src/app/shared/model/live.interface';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,19 +13,22 @@ import { Observable } from 'rxjs';
 export class HomeComponent {
   isButtonCLicked: boolean = false;
   tempSpan: boolean = false;
-  idView:string = this.authSvc.usuario.uid; //busqueda de email
-  user:userI;
+  idView: string = this.authSvc.usuario.uid; //busqueda de email
+  user: userI;
   url: SafeResourceUrl;
   liveData: liveI;
   currentDate: Date;
+  showSpan: boolean = false;
+  time:number = 3000;
 
   ngOnInit(): void {
     this.tempSpan = true;
     setTimeout(() => {
-    this.tempSpan = false;
-    }, 10000);
+      this.tempSpan = false
+      setTimeout(() => { this.tempSpan = null }, 500);
+    }, 7000);
   }
-  constructor(private subaSvc:SubaSvcService, private authSvc:AuthSvcService, private domSanitizer: DomSanitizer) {
+  constructor(private subaSvc: SubaSvcService, private authSvc: AuthSvcService, private domSanitizer: DomSanitizer) {
     this.searchUserData();
     this.subaSvc.getLiveById().subscribe((data) => {
       this.liveData = data;
@@ -35,25 +37,21 @@ export class HomeComponent {
       }
     });
     this.currentDate = new Date();
-   }
-
-
-  searchUserData():void{
-    this.subaSvc.getUserById(this.idView).subscribe((user) => { this.user = user;  });
-}
-
-  onClickButton(): void {
-    this.isButtonCLicked = true;
-    setTimeout(() => {
-      this.isButtonCLicked = false;
-    }, 3000);
   }
 
-  getButtonClasses() {
-    return {
-      'bg-red-500': this.isButtonCLicked,
-      'ring-red-700': this.isButtonCLicked
-    };
+
+  searchUserData(): void {
+    this.subaSvc.getUserById(this.idView).subscribe((user) => { this.user = user; });
+  }
+
+  onClickButton() {
+    if (!this.isButtonCLicked) {
+      this.subaSvc.updatePujasState();
+    }
+    this.isButtonCLicked = true;
+    this.showSpan = true;
+    setTimeout(() => { this.isButtonCLicked = false; }, this.time);
+    setTimeout(() => { this.showSpan = false  }, this.time);
   }
 
 }

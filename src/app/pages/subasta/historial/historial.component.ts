@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SubaSvcService } from '../suba-svc.service';
+import { Observable, Subscription } from 'rxjs';
+import { pujaI } from 'src/app/shared/model/puja.interface';
 
 @Component({
   selector: 'app-historial',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./historial.component.scss']
 })
 export class HistorialComponent implements OnInit {
+  historial:Observable<pujaI[]>
 
-  constructor() { }
+  constructor(private subaSvc:SubaSvcService) {
+    this.historial = this.subaSvc.initializeHistoryPujasCollection();
+   }
 
   ngOnInit(): void {
+
   }
 
 }

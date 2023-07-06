@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DirectosRoutingModule } from './directos-routing.module';
 import { DirectosComponent } from './directos.component';
+import { SharedModule } from 'src/app/shared/components/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { DirectosComponent } from './directos.component';
   ],
   imports: [
     CommonModule,
-    DirectosRoutingModule
+    DirectosRoutingModule,
+    SharedModule
   ]
 })
 export class DirectosModule { }
