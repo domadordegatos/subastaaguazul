@@ -2,9 +2,9 @@
   *ngIf="(user$ | async)?.emailVerified">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="home" style="color: white;">
-      <img src="../../../../assets/img/logo.png" alt="Logo" width="30" height="30"
+      <img [src]="liveData?.img" alt="Logo" width="30" height="30"
         class="d-inline-block align-text-top">
-      SUBA-AGZ APP
+      {{liveData?.title}}
     </a>
     <button (mousedown)="onClickButton()" [ngClass]="{'button-clicked': isButtonClicked}" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="expandMenu()">
@@ -19,10 +19,10 @@
         <li class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/home"><b>Inicio</b></a>
         </li>
-        <li class="nav-item text-li d-flex justify-content-end">
+        <li *ngIf="liveData?.email == (user$ | async)?.email" class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/directo"><b>Directos</b></a>
         </li>
-        <li class="nav-item text-li d-flex justify-content-end">
+        <li *ngIf="liveData?.email == (user$ | async)?.email" class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/gestion"><b>Gestion</b></a>
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
@@ -30,6 +30,9 @@
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/historial"><b>Historial Pujas</b></a>
+        </li>
+        <li class="nav-item text-li d-flex justify-content-end">
+          <a class="nav-link fw-lighter fst-italic" routerLink="/help" style="color: #adadad;">Ayuda</a>
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
           <a type="button" class="nav-link d-flex" (click)="onLogout()"><b>Salir</b>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { AuthSvcService } from 'src/app/pages/auth/auth-svc.service';
 import { SubaSvcService } from 'src/app/pages/subasta/suba-svc.service';
+import { liveI } from '../../model/live.interface';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +17,14 @@ export class HeaderComponent {
   public viewUser: any = this.authSvc.dataUser;
   isMenuExpanded = false;
   isButtonClicked: boolean = false;
-
+  liveData: liveI;
+  
   constructor(public authSvc: AuthSvcService, private route: Router, private subaSvc: SubaSvcService) { 
     
+  }
+
+  ngOnInit(): void {
+    this.subaSvc.getLiveById().subscribe((data) => { this.liveData = data });
   }
   
   expandMenu(): void {

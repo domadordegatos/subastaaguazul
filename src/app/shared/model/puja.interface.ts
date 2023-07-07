@@ -6,4 +6,5 @@ export interface pujaI{
     win:boolean
     user?:any
     id?:string
+    notified?:boolean
 }

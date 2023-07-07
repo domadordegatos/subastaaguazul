@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalInterface, Modal } from 'flowbite';
-import { Observable } from 'rxjs';
 import { userI } from 'src/app/shared/model/user.interface';
 import Swal from 'sweetalert2';
 import { SubaSvcService } from '../suba-svc.service';
 import { AuthSvcService } from '../../auth/auth-svc.service';
+import { liveI } from 'src/app/shared/model/live.interface';
 
 @Component({
   selector: 'app-update-information',
@@ -19,7 +19,7 @@ export class UpdateInformationComponent implements OnInit {
   dataFind:boolean = false; //estado de los datos de usuario si los encuentra
   emailView:string = this.authSvc.usuario.email; //busqueda de email
   idView:string = this.authSvc.usuario.uid;
-
+  liveData: liveI;
 
   constructor(private fb: FormBuilder, private subaSvc:SubaSvcService, private authSvc:AuthSvcService){
     this.searchUserData();
@@ -27,6 +27,7 @@ export class UpdateInformationComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.subaSvc.getLiveById().subscribe((data) => { this.liveData = data });
     const $modalElement: HTMLElement = document.querySelector('#defaultModal')!;
     this.modal = new Modal($modalElement);
     /* modal */
@@ -64,13 +65,24 @@ export class UpdateInformationComponent implements OnInit {
     if(this.usersForm.valid){
       const userInformation = this.usersForm.value;
       const userId = this.authSvc.usuario.uid || null;
-      this.subaSvc.onSaveUserInformation(userInformation,userId);
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Datos cargados con exito!',
-        showConfirmButton: false,
-        timer: 1500,
+        title: 'Estas seguro?',
+        text: "Ya no podras actualizarlos",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, enviar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.subaSvc.onSaveUserInformation(userInformation,userId);
+          Swal.fire(
+            'Excelente',
+            'Datos cargados con exito!',
+            'success'
+            )
+        }
       })
       this.searchUserData();
     }

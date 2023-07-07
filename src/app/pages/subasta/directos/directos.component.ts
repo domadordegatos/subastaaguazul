@@ -21,9 +21,14 @@ export class DirectosComponent implements OnInit {
 
   constructor(private subaSvc: SubaSvcService, private domSanitizer: DomSanitizer) { }
 
-  topClean(){
-
-  }
+  async topClean() {
+    try {
+      await this.subaSvc.updatePujasFalse();
+      this.dataList();
+    } catch (err) {
+      console.error(err);
+    }
+  }  
 
   directoState(state:boolean){
     Swal.fire({
@@ -55,6 +60,16 @@ export class DirectosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataList();
+    this.subaSvc.getLiveById().subscribe((data) => {
+      this.liveData = data;
+      if (this.liveData) {
+        this.url = this.domSanitizer.bypassSecurityTrustResourceUrl(this.liveData.url);
+      }
+    });
+  }
+
+  dataList(){
     this.topFive = this.subaSvc.getFivePujas();
     this.pujasWithUsers$ = this.topFive.pipe(
       switchMap(pujas => {
@@ -72,16 +87,8 @@ export class DirectosComponent implements OnInit {
         );
       })
     );
-  
     /* this.pujasWithUsers$.subscribe(data => {
       console.log(data);
     }); */
-
-    this.subaSvc.getLiveById().subscribe((data) => {
-      this.liveData = data;
-      if (this.liveData) {
-        this.url = this.domSanitizer.bypassSecurityTrustResourceUrl(this.liveData.url);
-      }
-    });
   }
 }

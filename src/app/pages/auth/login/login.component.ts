@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthSvcService } from '../auth-svc.service';
 import Swal from 'sweetalert2'
+import { liveI } from 'src/app/shared/model/live.interface';
+import { SubaSvcService } from '../../subasta/suba-svc.service';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +19,13 @@ export class LoginComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
   });
+  liveData: liveI;
 
-  constructor(public afAuth:AngularFireAuth, private authSvc:AuthSvcService,private route:Router) {
+  constructor(private subaSvc:SubaSvcService, public afAuth:AngularFireAuth, private authSvc:AuthSvcService,private route:Router) {
   }
   
   ngOnInit(): void {
+    this.subaSvc.getLiveById().subscribe((data) => { this.liveData = data });
     this.authSvc.redireccionarLogin();
   }
 

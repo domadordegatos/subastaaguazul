@@ -5,6 +5,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { userI } from 'src/app/shared/model/user.interface';
 import Swal from 'sweetalert2'
 import { Observable } from 'rxjs';
+import { SubaSvcService } from '../../subasta/suba-svc.service';
+import { liveI } from 'src/app/shared/model/live.interface';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +20,12 @@ export class RegisterComponent implements OnInit {
   });
   email:string;
   public viewUser:any = this.afAuth.usuario;
-  constructor(public afAuth:AuthSvcService ,private authSvc:AuthSvcService, private route:Router) {
+  liveData: liveI;
+  constructor(private subaSvc:SubaSvcService, public afAuth:AuthSvcService ,private authSvc:AuthSvcService, private route:Router) {
   }
 
   ngOnInit(){
+    this.subaSvc.getLiveById().subscribe((data) => { this.liveData = data });
   }
   
   onRegister() {

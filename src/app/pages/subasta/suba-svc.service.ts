@@ -49,7 +49,22 @@ export class SubaSvcService {
     });
   }
   
-  
+  updateNotifiedPuja(userId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const pujaSnapshot = await this.pujasCollection.ref.where('idUser', '==', userId).where('state', '==', true).get();
+        const batch = this.afs.firestore.batch();
+        pujaSnapshot.forEach(pujaDoc => {
+          const pujaRef = this.pujasCollection.doc(pujaDoc.id).ref;
+          batch.update(pujaRef, { notified: true });
+        });
+        await batch.commit();
+        resolve();
+      } catch (err) {
+        reject(err.message);
+      }
+    });
+  }
 
   public getAllUsers(): Observable<userI[]> {
     this.usuariosCollection = this.afs.collection<userI>('users', p => p.orderBy('paleta', 'asc'));
@@ -81,6 +96,21 @@ export class SubaSvcService {
         )
       );
   }
+
+  public getLastPuja(): Observable<pujaI | undefined> {
+    return this.afs.collection<pujaI>('pujas', p => p.where('state', '==', true).where('idUser', '==', this.afAuth.usuario.uid))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        map(pujas => {
+          if (pujas.length > 0) {
+            return pujas[0];
+          } else {
+            return undefined;
+          }
+        })
+      );
+  }
+  
 
   initializeHistoryPujasCollection(): Observable<pujaI[]> {
     const query: QueryFn = ref => ref.where('idUser', '==', this.afAuth.usuario.uid).orderBy('date', 'desc').limit(40);
@@ -123,7 +153,8 @@ export class SubaSvcService {
         const state = true;
         const win = false;
         const id = this.afs.createId();
-        const data = { idUser, date, state, hour, win, id };
+        const notified = false;
+        const data = { idUser, date, state, hour, win, id, notified };
         const result = await this.pujasCollection.doc(id).set(data); // Utilizamos el ID generado como el ID del documento
         resolve(result);
       } catch (err) {
@@ -132,8 +163,32 @@ export class SubaSvcService {
     });
   }
   
+  getActivePujasCollection(): AngularFirestoreCollection<pujaI> {
+    return this.afs.collection<pujaI>('pujas', p => p.where('state', '==', true));
+  }
+  
 
+  updatePujasFalse(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const pujasCollection = this.getActivePujasCollection(); // Obtener la colección filtrada
+        const pujasSnapshot = await pujasCollection.get().toPromise();
+        const batch = this.afs.firestore.batch();
+        pujasSnapshot.forEach((pujaDoc: QueryDocumentSnapshot<pujaI>) => {
+          const pujaRef = pujasCollection.doc(pujaDoc.id).ref; // Utilizar la colección filtrada
+          batch.update(pujaRef, { state: false });
+        });
+        await batch.commit();
+        resolve();
+      } catch (err) {
+        reject(err.message);
+      }
+    });
+  }
+  
+  
 
+  
   updatePujasState(): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
