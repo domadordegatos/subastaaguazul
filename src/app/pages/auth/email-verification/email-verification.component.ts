@@ -9,13 +9,10 @@ import { Router } from '@angular/router';
   templateUrl: './email-verification.component.html',
   styleUrls: ['./email-verification.component.scss']
 })
-export class EmailVerificationComponent implements OnInit {
+export class EmailVerificationComponent{
   public user$: Observable<any> = this.authSvc.afAuth.user;
   constructor(private authSvc: AuthSvcService, private route:Router) { }
 
-  ngOnInit(): void {
-      console.log('ngOnInit');
-  }
 
   onSendEmail(){
     Swal.fire({
@@ -27,9 +24,4 @@ export class EmailVerificationComponent implements OnInit {
     this.authSvc.sendVerificationEmail();
     this.route.navigate(['/login']);
   }
-
-/*   ngOnDestroy(){
-    this.authSvc.logout();
-  } */
-
 }

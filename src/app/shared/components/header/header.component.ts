@@ -18,7 +18,7 @@ export class HeaderComponent {
   isMenuExpanded = false;
   isButtonClicked: boolean = false;
   liveData: liveI;
-  
+  timeoutId //rreinicia el reloj en caso de que se presione el xpan header
   constructor(public authSvc: AuthSvcService, private route: Router, private subaSvc: SubaSvcService) { 
     
   }
@@ -28,9 +28,12 @@ export class HeaderComponent {
   }
   
   expandMenu(): void {
+    if(this.isMenuExpanded){
+      clearTimeout(this.timeoutId);
+    }
     this.isMenuExpanded = true;
 
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.isMenuExpanded = false;
       this.isButtonClicked = false;
     }, 4000); // 3000 ms = 3 segundos

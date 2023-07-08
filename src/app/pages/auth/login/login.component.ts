@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       const user =  await this.authSvc.login(email,password);
       this.checkUserIsVerified(user);
     }catch(err){
-      console.log("vista err",err);
+      console.log("vista err",err.code);
     }
   }
 
@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
   }
 
   private checkUserIsVerified(user:userI){
+    const { email, password } = this.loginForm.value;
     if(user && user.emailVerified){
               /* console.log("user=>",user); */
               this.route.navigate(['/home']);
@@ -57,6 +58,12 @@ export class LoginComponent implements OnInit {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'No haz verificado tu correo, ve a tu bandeja y busca el link que te enviamos',
+              })
+            }else if(email== '' || password==''){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Campos incompletos',
               })
             }else{
               Swal.fire({

@@ -88,16 +88,16 @@ export class AuthSvcService {
 
   async register(email: string, password: string): Promise<any> {
     try {
-      const { user } = await this.afAuth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+      const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
       await this.sendVerificationEmail();
       return user;
     } catch (error) {
       console.log(error);
+      throw error; // Lanzar el error para que se maneje en el componente
     }
   }
+  
+  
 
   async signInGoogle(): Promise<userI> {
     try {

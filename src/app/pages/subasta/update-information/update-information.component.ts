@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { SubaSvcService } from '../suba-svc.service';
 import { AuthSvcService } from '../../auth/auth-svc.service';
 import { liveI } from 'src/app/shared/model/live.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-information',
@@ -21,7 +22,7 @@ export class UpdateInformationComponent implements OnInit {
   idView:string = this.authSvc.usuario.uid;
   liveData: liveI;
 
-  constructor(private fb: FormBuilder, private subaSvc:SubaSvcService, private authSvc:AuthSvcService){
+  constructor(private route: Router, private fb: FormBuilder, private subaSvc:SubaSvcService, private authSvc:AuthSvcService){
     this.searchUserData();
     this.initForm();
   }
@@ -62,6 +63,7 @@ export class UpdateInformationComponent implements OnInit {
 
   onSave():void{
     /* console.log('saved', this.usersForm.value); */
+    
     if(this.usersForm.valid){
       const userInformation = this.usersForm.value;
       const userId = this.authSvc.usuario.uid || null;
@@ -77,11 +79,11 @@ export class UpdateInformationComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.subaSvc.onSaveUserInformation(userInformation,userId);
-          Swal.fire(
-            'Excelente',
-            'Datos cargados con exito!',
-            'success'
-            )
+          this.messageExito();
+          this.closeModal();
+          setTimeout(() => {
+            this.route.navigate(['/home']);
+          }, 500);
         }
       })
       this.searchUserData();
@@ -94,7 +96,7 @@ export class UpdateInformationComponent implements OnInit {
       icon: 'success',
       title: 'Cambios Guardados!',
       showConfirmButton: false,
-      timer: 1000
+      timer: 3000
     })
   }
 

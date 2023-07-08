@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HelpRoutingModule } from './help-routing.module';
 import { HelpComponent } from './help.component';
+import { SharedModule } from 'src/app/shared/components/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { HelpComponent } from './help.component';
   ],
   imports: [
     CommonModule,
-    HelpRoutingModule
+    HelpRoutingModule,
+    SharedModule
   ]
 })
 export class HelpModule { }

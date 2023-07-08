@@ -1,54 +1,59 @@
-<div class="contenedor">
+<div class="contenedor w-full">
     <div class="section1 w-full p-1">
         <div *ngIf="liveData?.estado" class="title flex justify-center items-center">
             <h1 class="mb-1 text-center font-light text-gray-500">Transmisión en vivo</h1>
             <img src="../../../../assets/img/live.gif" width="15%" alt="live logo" class="ml-2">
         </div>
-        <iframe *ngIf="liveData?.estado" class="rounded-lg" [src]="url" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="100%"></iframe>
+        <iframe *ngIf="liveData?.estado" class="rounded-lg" [src]="url" frameborder="0" allowfullscreen="true"
+            scrolling="no" height="378" width="100%"></iframe>
         <app-ups *ngIf="!liveData?.estado"></app-ups>
     </div>
     <div class="section2 mt-3 bg-gray-200 w-full py-4">
-        <div style="display: flex;">
-            <div style="width: 80%; display: inline-table;" class="px-2">
-                <div class="col text-base justify-end">
-                    <p class="text-center"><b>{{ currentDate | date:'d MMMM y':'':'es' }}</b></p>
+        <div style="display: flex;" class="opcion2">
+            <div style="width: 80%; display: bloc !important;" class="px-2 datos">
+                <div class="col text-base justify-end text-center">
+                    <span class="text-center"><b>{{ currentDate | date:'d MMMM y':'':'es' }}</b></span>
                 </div>
 
-                <div class="col text-base font-bold text-center bg-red-200 rounded-md">
-                    {{user?.name | titlecase}}
+                <div class="col text-base font-bold text-center mt-1 bg-red-200 rounded-md">
+                    <span>{{user?.name | titlecase}}</span>
                 </div>
-                <div class="col flex">
-                    <div class="col2">Identificación: <b>{{user?.cedula}}</b></div>
-                    <div class="col1">Paleta: <b>#{{user?.paleta}}</b></div>
+                <div class="contenedorDatos col flex" style="width: 100%; align-items: center; justify-content: center;">
+                    <div style="width: 50%;" class="col2 text-center"><span class="datos2">Identificación: <b>{{user?.cedula | number}}</b></span></div>
+                    <div style="width: 50%;" class="col1 text-center"><span class="datos2">Paleta: <b>#{{user?.paleta}}</b></span></div>
                 </div>
             </div>
-            <div *ngIf="user?.paleta != 0 && liveData?.estado" style="width: 40%; display: flex; align-items: center; justify-content: center;">
-                <img (click)="onClickButton()" [ngClass]="{'bg-green-400': !isButtonCLicked, 'ring-green-500': !isButtonCLicked, 'bg-red-400': isButtonCLicked, 'ring-red-500': isButtonCLicked}" class="p-3 rounded-lg ring-4" src="../../../../assets/img/hand.png" width="65%" alt="mano logo">
+            <div *ngIf="user?.paleta != 0 && liveData?.estado" class="imagen"
+                style="width: 40%; display: flex; align-items: center; justify-content: center;">
+                <img id="mano" (click)="onClickButton()"
+                    [ngClass]="{'bg-green-400': !isButtonCLicked, 'ring-green-500': !isButtonCLicked, 'bg-red-400': isButtonCLicked, 'ring-red-500': isButtonCLicked}"
+                    class="cursorr p-3 rounded-lg ring-4" src="../../../../assets/img/hand.png" width="65%"
+                    alt="mano logo">
             </div>
-            <div class="px-2" *ngIf="user?.paleta == 0" style="width: 40%; display: flex; align-items: center; justify-content: center;">
-                <a class="text-red-600 font-light p-2 text-center text-sm rounded ring-2 ring-red-500" routerLink="/unautorized">
+            <div class="px-2 imagen" *ngIf="user?.paleta == 0 && liveData?.estado"
+                style="width: 40%; display: flex; align-items: center; justify-content: center;">
+                <a class="cursorr text-red-600 font-light p-2 text-center text-sm rounded ring-2 ring-red-500"
+                    routerLink="/unautorized">
                     <span>Usted no esta autorizad@ para comprar</span>
                 </a>
             </div>
-            <div class="px-2" *ngIf="!liveData?.estado" style="width: 40%; display: flex; align-items: center; justify-content: center;">
+            <div class="px-2 imagen" *ngIf="!liveData?.estado"
+                style="width: 40%; display: flex; align-items: center; justify-content: center;">
                 <a class="text-gray-600 font-light p-2 text-center text-sm rounded ring-2 ring-gray-500">
                     <span>Aun no iniciamos...</span>
                 </a>
             </div>
         </div>
-        <div id="enviadaSpan" class="span bg-gray-300 text-center" [ngClass]="{'show': tempSpan, 'opacity-0': !tempSpan, 'hidden': tempSpan == null}" *ngIf="user?.paleta != 0">
-            <span class="px-4 font-light text-gray-500">Puedes realizar una puja presionando el boton cuando este en color verde</span>
+
+        <div id="enviadaSpan" class="mt-4 span bg-gray-300 text-center"
+            [ngClass]="{'show': tempSpan, 'opacity-0': !tempSpan, 'hidden': tempSpan == null}"
+            *ngIf="user?.paleta != 0">
+            <span class="aviso px-4 font-light text-gray-500">Puedes realizar una puja presionando el boton cuando este en
+                color verde</span>
         </div>
-        <div id="enviadaSpan" class="span bg-green-400 text-center" [ngClass]="{'show': showSpan,'opacity-0': showSpan == null, 'hidden': !showSpan}">
+        <div id="enviadaSpan" class="span bg-green-400 text-center enviada"
+            [ngClass]="{'show': showSpan,'opacity-0': showSpan == null, 'hidden': !showSpan}">
             <span class="px-4 font-light text-white">Enviada</span>
         </div>
     </div>
-    
-
-    <ng-template #name>
-        <div class="section3">
-
-        </div>
-    </ng-template>
-    
 </div>

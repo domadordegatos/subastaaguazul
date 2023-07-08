@@ -14,8 +14,9 @@ const routes: Routes = [
   { path: 'information', loadChildren: () => import('./pages/subasta/update-information/update-information.module').then(m => m.UpdateInformationModule), canActivate: [CanAdminGuard] },
   { path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule), canActivate: [OnlyloggedGuard] },
   { path: 'register', loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterModule), canActivate: [OnlyloggedGuard] },
-  { path: 'verification-email', loadChildren: () => import('./pages/auth/email-verification/email-verification.module').then(m => m.EmailVerificationModule), canActivate: [OnlyloggedGuard] },
   { path: 'unautorized', loadChildren: () => import('./pages/subasta/unautorized/unautorized.module').then(m => m.UnautorizedModule), canActivate: [CanAdminGuard] },
+  { path: 'verification-email', loadChildren: () => import('./pages/auth/email-verification/email-verification.module').then(m => m.EmailVerificationModule), canActivate: [OnlyloggedGuard] },
+  { path: 'viewtop', loadChildren: () => import('./pages/subasta/view-top/view-top.module').then(m => m.ViewTopModule)},
   { path: '**', redirectTo: '/home' }
 ];
 

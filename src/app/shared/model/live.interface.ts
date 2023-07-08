@@ -8,4 +8,5 @@ export interface liveI{
     img:string
     tell1:number
     tell2:number
+    lugar:string
 }

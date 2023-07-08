@@ -97,6 +97,21 @@ export class SubaSvcService {
       );
   }
 
+  public getTopPujas(): Observable<pujaI | undefined> {
+    return this.afs.collection<pujaI>('pujas', p => p.where('state', '==', true).orderBy('date', 'desc').limit(1))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        map(pujas => {
+          if (pujas.length > 0) {
+            return pujas[0];
+          } else {
+            return undefined;
+          }
+        })
+      );
+  }
+  
+
   public getLastPuja(): Observable<pujaI | undefined> {
     return this.afs.collection<pujaI>('pujas', p => p.where('state', '==', true).where('idUser', '==', this.afAuth.usuario.uid))
       .valueChanges({ idField: 'id' })
@@ -110,6 +125,15 @@ export class SubaSvcService {
         })
       );
   }
+
+  public getTopOnePuja(): Observable<pujaI> {
+    return this.afs.collection<pujaI>('pujas', ref =>
+      ref.where('state', '==', true).orderBy('date', 'desc').limit(1)
+    ).valueChanges().pipe(
+      map(pujas => (pujas.length > 0) ? pujas[0] : null)
+    );
+  }
+  
   
 
   initializeHistoryPujasCollection(): Observable<pujaI[]> {

@@ -21,12 +21,14 @@ import { BannerComponent } from './shared/components/banner/banner.component';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { UnautorizedComponent } from './pages/subasta/unautorized/unautorized.component';
+import { ViewTopComponent } from './pages/subasta/view-top/view-top.component';
 
 registerLocaleData(localeEs);
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    ViewTopComponent
   ],
   imports: [
     BrowserModule,

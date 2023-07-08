@@ -2,11 +2,9 @@ import { Router } from '@angular/router';
 import { AuthSvcService } from 'src/app/pages/auth/auth-svc.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { userI } from 'src/app/shared/model/user.interface';
-import Swal from 'sweetalert2'
-import { Observable } from 'rxjs';
 import { SubaSvcService } from '../../subasta/suba-svc.service';
 import { liveI } from 'src/app/shared/model/live.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -31,15 +29,32 @@ export class RegisterComponent implements OnInit {
   onRegister() {
     const { email, password } = this.registerForm.value;
     try {
-      const user = this.authSvc.register(email, password);
-      if (user) {
-        setTimeout(() => {
-          this.route.navigate(['/verification-email'])
-        }, 2000);
-      }
+      this.authSvc.register(email, password)
+        .then(() => {
+          setTimeout(() => {
+            this.route.navigate(['/verification-email']);
+          }, 1000);
+        })
+        .catch((error) => {
+          if (error.code === 'auth/email-already-in-use') {
+            this.mensajeError('Este correo ya esta en uso')
+          }else if(error.code === 'auth/invalid-email'){
+            this.mensajeError('Correo invalido, por favor verifica los campos')
+          }else {
+            this.mensajeError('Error al registrar, llama a soporte')
+          }
+        });
     } catch (error) {
       console.log(error);
     }
+  }
+  
+  mensajeError(msg:string){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: msg,
+    })
   }
 
 }

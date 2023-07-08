@@ -13,8 +13,11 @@
     <div class="collapse navbar-collapse justify-content-end" [class.show]="isMenuExpanded" style="visibility: visible;"
       id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item d-flex justify-content-end" style="color: gray;">
-          <a class="nav-link disabled fst-italic">{{ (user$ | async)?.email }}</a>
+        <li class="nav-item text-li d-flex justify-content-end">
+          <a class="nav-link fw-lighter fst-italic" routerLink="/help" style="color: white;">Ayuda</a>
+        </li>
+        <li class="nav-item d-flex justify-content-end" style="color: white;">
+          <a class="nav-link disabled fst-italic">"{{ (user$ | async)?.email }}"</a>
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/home"><b>Inicio</b></a>
@@ -30,9 +33,6 @@
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
           <a class="nav-link" routerLink="/historial"><b>Historial Pujas</b></a>
-        </li>
-        <li class="nav-item text-li d-flex justify-content-end">
-          <a class="nav-link fw-lighter fst-italic" routerLink="/help" style="color: #adadad;">Ayuda</a>
         </li>
         <li class="nav-item text-li d-flex justify-content-end">
           <a type="button" class="nav-link d-flex" (click)="onLogout()"><b>Salir</b>

@@ -1,0 +1,11 @@
+<div class="contenedor">
+  <h1>
+    <ng-container *ngIf="(paleta | async) as valorPaleta; else sinPaleta">
+      <b class="">{{ valorPaleta }}</b>
+    </ng-container>
+    <ng-template #sinPaleta>
+      <b>000</b>
+    </ng-template>
+    <img src="../../../../assets/img/buttonlive.gif" alt="">
+  </h1>
+</div>

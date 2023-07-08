@@ -1,0 +1,16 @@
+@media (max-width: 1500px) {
+    .separador1{ width: 100%; display: flex !important; justify-content: center !important;}
+    .separador2{margin-top: 1rem;}
+    .img{width: 10%;}
+}
+@media (min-width: 1200px) {
+    .section1{display: flex;}
+    .part1{width: 70%;}
+    .part2{width: 30%; margin-top: 1rem; font-size: 2rem !important;}
+    #ups{width: 100%;}
+    .separador1,.separador2{height: 30vh;}
+    .separador2{height: 30vh;}
+    .separador1{font-size: 1rem;}
+    .conjunto{width: 100%; font-size: 2rem;
+    img{ width: 10%;}}
+}
