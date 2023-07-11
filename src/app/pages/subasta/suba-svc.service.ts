@@ -15,7 +15,7 @@ export class SubaSvcService {
   private liveCollection: AngularFirestoreCollection<liveI>
   private pujasCollection: AngularFirestoreCollection<pujaI>
   private historyPujasCollection: AngularFirestoreCollection<pujaI>
-  private uid = 'SrtqnBVrIFKCKKzmjpCh';
+  private uid = 'o89bpmusDtcunPGDzfRF';
 
   constructor(private readonly afs: AngularFirestore, public afAuth: AuthSvcService) {
     this.usuariosCollection = afs.collection<userI>('users');
